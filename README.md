@@ -1,3 +1,4 @@
+cat > README.md <<'EOF'
 # MCSOS 260502
 MCSOS 260502 adalah proyek sistem operasi pendidikan bertahap untuk target
 x86_64 dengan host pengembangan Windows 11 x64 melalui WSL 2.

@@ -59,3 +59,4 @@ exit 1
 fi
 say "Environment check completed. This means the M0 environment is
 checkable, not that the OS can boot."
+
