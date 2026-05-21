@@ -5,7 +5,7 @@
 - Praktikum: M2
 - Target: x86_64, QEMU, OVMF, Limine
 - Nama/Kelompok: Sihab
-- Commit hash: (diisi setelah commit)
+- Commit hash: b4ae60ac0b6eafa9530be9c55b895dcdf041130c
 - Tanggal: 2026-05-21
 
 ## Ringkasan Status
