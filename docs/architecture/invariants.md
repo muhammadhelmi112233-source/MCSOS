@@ -1,11 +1,23 @@
-# MCSOS Toolchain and Environment Invariants
+# Architecture Invariants — MCSOS 260502
 
-## M1 invariants
-1. Repository MCSOS berada di filesystem Linux WSL, bukan di `/mnt/c` atau mount Windows lain.
-2. Semua generated artifact berada di `build/` dan tidak dikomit ke Git.
-3. Semua build tool wajib tersedia melalui PATH WSL dan tercatat di `build/meta/toolchain-versions.txt`.
-4. Proof object harus bertipe ELF64 x86_64 dan dihasilkan dengan mode freestanding.
-5. Proof ELF tidak boleh memiliki undefined symbol.
-6. Kompilasi kernel/proof tidak boleh bergantung pada hosted libc, startup object, dynamic linker, exception runtime, atau stack protector runtime host.
-7. QEMU x86_64, machine q35, dan OVMF harus terdeteksi sebelum M2 dimulai.
-8. Setiap perubahan toolchain atau versi distro harus dicatat dalam readiness review.
+## Boot Path Invariants
+1. Firmware OVMF menyiapkan platform sebelum bootloader berjalan.
+2. Limine memuat kernel ELF64 dari ISO bootable.
+3. Kernel entry point adalah kmain pada alamat higher-half 0xffffffff80000000.
+4. Kernel tidak kembali setelah kmain; halt_forever dijalankan.
+5. Serial console COM1 diinisialisasi sebelum subsistem lain.
+
+## Build Invariants
+1. Semua source dikompilasi dengan -ffreestanding dan -mno-red-zone.
+2. Tidak ada dependency pada hosted libc.
+3. Compiler target adalah x86_64-unknown-none-elf.
+4. Linker adalah ld.lld dengan linker script eksplisit.
+
+## ABI Invariants
+1. Fungsi C menggunakan x86_64 System V calling convention.
+2. Red zone dinonaktifkan (-mno-red-zone).
+3. SIMD/FPU tidak digunakan pada M2.
+4. Kernel tidak bergantung pada main, libc, exception runtime, unwinder, atau dynamic loader.
+
+## State Transition
+OVMF -> Limine -> kernel.elf -> kmain -> serial_init -> serial_write -> halt_forever
