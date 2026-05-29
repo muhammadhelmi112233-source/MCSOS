@@ -1,0 +1,46 @@
+limine: Loading executable `boot():/boot/kernel.elf`...
+MCSOS 260502 M6 kernel entered
+kernel_start=0xffffffff80000000
+kernel_end=0xffffffff80208000
+rflags_before_idt=0x0000000000000082
+[MCSOS:M5] boot: external interrupt bring-up start
+[M4] selftest: IDT invariants passed
+[MCSOS:M5] idt: loaded
+[MCSOS:M5] pic: remapped; mask master=0x00000000000000fe slave=0x00000000000000ff
+[MCSOS:M5] pit: configured 100Hz
+[MCSOS:M6] boot: physical memory manager init start
+[MCSOS:M6] memory map dari limine:
+  region 0: base=0x0000000000001000 len=0x0000000000052000 type=3
+  region 1: base=0x0000000000053000 len=0x000000000004c000 type=1
+  region 2: base=0x000000000009fc00 len=0x0000000000000400 type=2
+  region 3: base=0x00000000000f0000 len=0x0000000000010000 type=2
+  region 4: base=0x0000000000100000 len=0x000000000fc08000 type=1
+  region 5: base=0x000000000fd08000 len=0x0000000000003000 type=3
+  region 6: base=0x000000000fd0b000 len=0x0000000000208000 type=4
+  region 7: base=0x000000000ff13000 len=0x000000000000b000 type=3
+  region 8: base=0x000000000ff1e000 len=0x0000000000001000 type=1
+  region 9: base=0x000000000ff1f000 len=0x0000000000002000 type=3
+  region 10: base=0x000000000ff21000 len=0x0000000000020000 type=1
+  region 11: base=0x000000000ff41000 len=0x000000000009e000 type=3
+  region 12: base=0x000000000ffdf000 len=0x0000000000021000 type=2
+  region 13: base=0x00000000b0000000 len=0x0000000010000000 type=2
+  region 14: base=0x00000000fd000000 len=0x00000000003e8000 type=5
+  region 15: base=0x00000000fed1c000 len=0x0000000000004000 type=2
+  region 16: base=0x00000000fffc0000 len=0x0000000000040000 type=2
+  region 17: base=0x000000fd00000000 len=0x0000000300000000 type=2
+[MCSOS:M6] pmm initialized: frames=16777216 free=64629 used=16712587
+[MCSOS:M6] sample frame alloc=0x0000000000053000 -> freed OK
+[MCSOS:M6] pmm: ready
+[MCSOS:M5] sti: enabling interrupts
+[MCSOS:TIMER] ticks=100
+[MCSOS:TIMER] ticks=200
+[MCSOS:TIMER] ticks=300
+[MCSOS:TIMER] ticks=400
+[MCSOS:TIMER] ticks=500
+[MCSOS:TIMER] ticks=600
+[MCSOS:TIMER] ticks=700
+[MCSOS:TIMER] ticks=800
+[MCSOS:TIMER] ticks=900
+[MCSOS:TIMER] ticks=1000
+[MCSOS:TIMER] ticks=1100
+[MCSOS:TIMER] ticks=1200

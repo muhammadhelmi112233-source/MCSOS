@@ -6,9 +6,11 @@
 #include <mcsos/kernel/log.h>
 #include <mcsos/kernel/panic.h>
 #include <mcsos/kernel/version.h>
+#include <mcsos/kernel/pmm.h>
 
 extern char __kernel_start[];
 extern char __kernel_end[];
+extern void kernel_memory_init(void);
 
 static void m4_selftest(void) {
     KERNEL_ASSERT(__kernel_end > __kernel_start);
@@ -51,6 +53,10 @@ void kmain(void) {
 
     pit_configure_hz(100u);
     log_writeln("[MCSOS:M5] pit: configured 100Hz");
+
+    log_writeln("[MCSOS:M6] boot: physical memory manager init start");
+    kernel_memory_init();
+    log_writeln("[MCSOS:M6] pmm: ready");
 
     log_writeln("[MCSOS:M5] sti: enabling interrupts");
     cpu_sti();
