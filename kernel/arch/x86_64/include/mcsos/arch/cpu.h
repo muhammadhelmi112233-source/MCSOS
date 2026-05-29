@@ -19,6 +19,10 @@ static inline void cpu_breakpoint(void) {
     __asm__ volatile ("int3" : : : "memory");
 }
 
+static inline void cpu_sti(void) {
+    __asm__ volatile ("sti" : : : "memory");
+}
+
 static inline uint64_t cpu_read_rflags(void) {
     uint64_t flags;
     __asm__ volatile ("pushfq; popq %0" : "=r"(flags) : : "memory");

@@ -48,3 +48,19 @@ void log_key_value_hex64(const char *key, uint64_t value) {
     log_hex64(value);
     log_putc('\n');
 }
+
+void log_dec64(uint64_t value) {
+    char buf[21];
+    uint32_t i = 0;
+    if (value == 0u) {
+        log_putc('0');
+        return;
+    }
+    while (value != 0u && i < sizeof(buf)) {
+        buf[i++] = (char)('0' + (int)(value % 10u));
+        value /= 10u;
+    }
+    while (i != 0u) {
+        log_putc(buf[--i]);
+    }
+}

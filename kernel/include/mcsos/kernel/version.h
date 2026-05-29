@@ -2,6 +2,6 @@
 #define MCSOS_KERNEL_VERSION_H
 #define MCSOS_NAME "MCSOS"
 #define MCSOS_VERSION "260502"
-#define MCSOS_MILESTONE "M4"
+#define MCSOS_MILESTONE "M5"
 #define MCSOS_BUILD_PROFILE "teaching-qemu-x86_64"
 #endif

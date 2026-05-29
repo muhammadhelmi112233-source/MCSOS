@@ -1,0 +1,23 @@
+limine: Loading executable `boot():/boot/kernel.elf`...
+MCSOS 260502 M5 kernel entered
+kernel_start=0xffffffff80000000
+kernel_end=0xffffffff80004028
+rflags_before_idt=0x0000000000000082
+[MCSOS:M5] boot: external interrupt bring-up start
+[M4] selftest: IDT invariants passed
+[MCSOS:M5] idt: loaded
+[MCSOS:M5] pic: remapped; mask master=0x00000000000000fe slave=0x00000000000000ff
+[MCSOS:M5] pit: configured 100Hz
+[MCSOS:M5] sti: enabling interrupts
+[MCSOS:TIMER] ticks=100
+[MCSOS:TIMER] ticks=200
+[MCSOS:TIMER] ticks=300
+[MCSOS:TIMER] ticks=400
+[MCSOS:TIMER] ticks=500
+[MCSOS:TIMER] ticks=600
+[MCSOS:TIMER] ticks=700
+[MCSOS:TIMER] ticks=800
+[MCSOS:TIMER] ticks=900
+[MCSOS:TIMER] ticks=1000
+[MCSOS:TIMER] ticks=1100
+[MCSOS:TIMER] ticks=1200

@@ -1,0 +1,26 @@
+There are 8 section headers, starting at offset 0x5108:
+
+Section Headers:
+  [Nr] Name              Type             Address           Offset
+       Size              EntSize          Flags  Link  Info  Align
+  [ 0]                   NULL             0000000000000000  00000000
+       0000000000000000  0000000000000000           0     0     0
+  [ 1] .text             PROGBITS         ffffffff80000000  00001000
+       0000000000001328  0000000000000000  AX       0     0     4096
+  [ 2] .rodata           PROGBITS         ffffffff80002000  00003000
+       0000000000000698  0000000000000000 AMS       0     0     4096
+  [ 3] .bss              NOBITS           ffffffff80003000  00004000
+       0000000000001028  0000000000000000  WA       0     0     4096
+  [ 4] .comment          PROGBITS         0000000000000000  00004000
+       0000000000000042  0000000000000001  MS       0     0     1
+  [ 5] .symtab           SYMTAB           0000000000000000  00004048
+       0000000000000b10  0000000000000018           7    34     8
+  [ 6] .shstrtab         STRTAB           0000000000000000  00004b58
+       0000000000000037  0000000000000000           0     0     1
+  [ 7] .strtab           STRTAB           0000000000000000  00004b8f
+       0000000000000577  0000000000000000           0     0     1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  D (mbind), l (large), p (processor specific)
