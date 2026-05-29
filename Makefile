@@ -82,3 +82,30 @@ clean:
 >rm -rf $(BUILD_DIR)
 distclean: clean
 >rm -rf iso_root limine evidence
+
+
+# ---- M7 VMM host test targets ----
+HOSTCC ?= cc
+HOST_CFLAGS_M7 := -std=c17 -Wall -Wextra -Werror -DMCSOS_HOST_TEST -Ikernel/include
+VMM_FREESTANDING_CFLAGS := --target=x86_64-unknown-none-elf \
+  -std=c17 -Wall -Wextra -Werror \
+  -ffreestanding -fno-builtin -fno-stack-protector -fno-stack-check \
+  -fno-pic -fno-pie -fno-lto -m64 -march=x86-64 -mno-red-zone \
+  -mno-mmx -mno-sse -mno-sse2 -mcmodel=kernel \
+  -Ikernel/include
+
+build/vmm.o: kernel/mm/vmm.c kernel/include/mcsos/kernel/vmm.h kernel/include/mcsos/kernel/types.h
+>mkdir -p build
+>$(CC) $(VMM_FREESTANDING_CFLAGS) -c kernel/mm/vmm.c -o build/vmm.o
+
+build/test_vmm_host: kernel/mm/vmm.c tests/test_vmm_host.c kernel/include/mcsos/kernel/vmm.h
+>mkdir -p build
+>$(HOSTCC) $(HOST_CFLAGS_M7) kernel/mm/vmm.c tests/test_vmm_host.c -o build/test_vmm_host
+
+check: build/vmm.o build/test_vmm_host
+>./build/test_vmm_host
+>nm -u build/vmm.o
+>objdump -dr build/vmm.o > build/vmm.objdump.txt
+>grep -q "invlpg" build/vmm.objdump.txt
+>grep -q "cr3"    build/vmm.objdump.txt
+>@echo "[PASS] M7 check selesai"
