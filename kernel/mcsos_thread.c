@@ -20,6 +20,7 @@ static void zero_context(mcsos_context_t *context) {
 }
 
 void mcsos_thread_trampoline(void) {
+#if !defined(MCSOS_HOST_TEST)
     extern mcsos_scheduler_t *g_sched_ptr;
     mcsos_scheduler_t *sched = g_sched_ptr;
     if (sched != (mcsos_scheduler_t *)0 && valid_thread_object(sched->current)) {
@@ -28,6 +29,7 @@ void mcsos_thread_trampoline(void) {
             t->entry(t->arg);
         }
     }
+#endif
     for (;;) {
 #if defined(__x86_64__)
         __asm__ volatile("hlt");
