@@ -14,6 +14,7 @@ extern char __kernel_end[];
 extern void kernel_memory_init(void);
 extern void kernel_vmm_init(void);
 extern void kernel_heap_init(void);
+extern void kernel_scheduler_init(void);
 
 static void m4_selftest(void) {
     KERNEL_ASSERT(__kernel_end > __kernel_start);
@@ -68,7 +69,10 @@ void kmain(void) {
     log_writeln("[MCSOS:M8] boot: kernel heap init start");
     kernel_heap_init();
     log_writeln("[MCSOS:M8] heap: ready");
-    log_writeln("[MCSOS:M8] M8 checkpoint reached");
+
+    log_writeln("[MCSOS:M9] boot: kernel scheduler init start");
+    kernel_scheduler_init();
+    log_writeln("[MCSOS:M9] scheduler: ready");
 
     log_writeln("[MCSOS:M5] sti: enabling interrupts");
     cpu_sti();
