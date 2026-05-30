@@ -1,0 +1,49 @@
+diff --git a/Makefile b/Makefile
+index 425c72a..d7ab3ec 100644
+--- a/Makefile
++++ b/Makefile
+@@ -14,8 +14,8 @@ LD := ld.lld
+ OBJDUMP := objdump
+ READELF := readelf
+ NM := nm
+-COMMON_CFLAGS := --target=x86_64-unknown-none-elf -std=c17 -ffreestanding -fno-builtin -fno-stack-protector -fno-stack-check -fno-pic -fno-pie -fno-lto -m64 -march=x86-64 -mabi=sysv -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -mcmodel=kernel -Wall -Wextra -Werror -Ikernel/arch/x86_64/include -Ikernel/include -I.
+-COMMON_ASFLAGS := --target=x86_64-unknown-none-elf -ffreestanding -fno-pic -fno-pie -m64 -mno-red-zone -Wall -Wextra -Werror -Ikernel/arch/x86_64/include -Ikernel/include -I.
++COMMON_CFLAGS := --target=x86_64-unknown-none-elf -std=c17 -ffreestanding -fno-builtin -fno-stack-protector -fno-stack-check -fno-pic -fno-pie -fno-lto -m64 -march=x86-64 -mabi=sysv -mno-red-zone -mno-mmx -mno-sse -mno-sse2 -mcmodel=kernel -Wall -Wextra -Werror -Ikernel/arch/x86_64/include -Ikernel/include -Iinclude -I.
++COMMON_ASFLAGS := --target=x86_64-unknown-none-elf -ffreestanding -fno-pic -fno-pie -m64 -mno-red-zone -Wall -Wextra -Werror -Ikernel/arch/x86_64/include -Ikernel/include -Iinclude -I.
+ CFLAGS := $(COMMON_CFLAGS)
+ ASFLAGS := $(COMMON_ASFLAGS)
+ BP_CFLAGS := $(COMMON_CFLAGS) -DMCSOS_M4_TRIGGER_BREAKPOINT=1
+@@ -109,3 +109,33 @@ check: build/vmm.o build/test_vmm_host
+ >grep -q "invlpg" build/vmm.objdump.txt
+ >grep -q "cr3"    build/vmm.objdump.txt
+ >@echo "[PASS] M7 check selesai"
++
++# ---- M8 Kernel Heap targets ----
++M8_BUILD_DIR := build/m8
++CFLAGS_M8_KERNEL := --target=x86_64-unknown-none-elf -std=c17 -Wall -Wextra -Werror -ffreestanding -fno-builtin -fno-stack-protector -mno-red-zone -Iinclude
++CFLAGS_M8_HOST := -std=c17 -Wall -Wextra -Werror -Iinclude
++
++.PHONY: m8-clean m8-kmem-freestanding m8-kmem-host-test m8-audit m8-all
++
++m8-clean:
++>$(RM) -r $(M8_BUILD_DIR)
++
++$(M8_BUILD_DIR):
++>mkdir -p $(M8_BUILD_DIR)
++
++m8-kmem-freestanding: | $(M8_BUILD_DIR)
++>$(CC) $(CFLAGS_M8_KERNEL) -c kernel/mm/kmem.c -o $(M8_BUILD_DIR)/kmem.freestanding.o
++
++m8-kmem-host-test: | $(M8_BUILD_DIR)
++>$(CC) $(CFLAGS_M8_HOST) tests/test_kmem.c kernel/mm/kmem.c -o $(M8_BUILD_DIR)/test_kmem
++>./$(M8_BUILD_DIR)/test_kmem | tee $(M8_BUILD_DIR)/test_kmem.log
++
++m8-audit: m8-kmem-freestanding
++>nm -u $(M8_BUILD_DIR)/kmem.freestanding.o | tee $(M8_BUILD_DIR)/nm_u.txt
++>test ! -s $(M8_BUILD_DIR)/nm_u.txt
++>readelf -h $(M8_BUILD_DIR)/kmem.freestanding.o > $(M8_BUILD_DIR)/readelf_h.txt
++>objdump -dr $(M8_BUILD_DIR)/kmem.freestanding.o > $(M8_BUILD_DIR)/kmem.objdump.txt
++>@echo "[PASS] M8 audit selesai"
++
++m8-all: m8-kmem-host-test m8-audit
++>@echo "[PASS] M8 all selesai"
