@@ -1,0 +1,38 @@
+== git ==
+praktikum/m9-kernel-thread-scheduler
+6582b27
+?? evidence/m10/
+
+== tools ==
+Ubuntu clang version 21.1.8 (6ubuntu1)
+gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+Ubuntu LLD 21.1.8 (compatible with GNU linkers)
+GNU nm (GNU Binutils for Ubuntu) 2.46
+GNU readelf (GNU Binutils for Ubuntu) 2.46
+GNU objdump (GNU Binutils for Ubuntu) 2.46
+QEMU emulator version 10.2.1 (Debian 1:10.2.1+ds-1ubuntu3)
+GNU gdb (Ubuntu 17.1-2ubuntu1) 17.1
+
+== previous artifacts ==
+evidence/m9/kernel_readelf_header.txt
+evidence/m9/kernel_symbols.txt
+evidence/m9/kernel_undefined.txt
+evidence/m9/nm_undefined.log
+evidence/m9/objdump_key.log
+evidence/m9/preflight_m9.log
+evidence/m9/qemu_m9.log
+evidence/m9/readelf_header.log
+evidence/m9/sha256.log
+evidence/m9/test_scheduler.log
+
+== scheduler check ==
+kernel/mcsos_thread.c:24:    extern mcsos_scheduler_t *g_sched_ptr;
+kernel/mcsos_thread.c:25:    mcsos_scheduler_t *sched = g_sched_ptr;
+kernel/mcsos_thread.c:26:    if (sched != (mcsos_scheduler_t *)0 && valid_thread_object(sched->current)) {
+kernel/mcsos_thread.c:42:int mcsos_scheduler_init(mcsos_scheduler_t *sched, mcsos_thread_t *boot_thread) {
+kernel/mcsos_thread.c:43:    if (sched == (mcsos_scheduler_t *)0 || boot_thread == (mcsos_thread_t *)0) {
+kernel/mcsos_thread.c:66:    sched->context_switches = 0;
+kernel/mcsos_thread.c:115:int mcsos_sched_enqueue(mcsos_scheduler_t *sched, mcsos_thread_t *thread) {
+kernel/mcsos_thread.c:116:    if (sched == (mcsos_scheduler_t *)0 || sched->initialized == 0 || !valid_thread_object(thread)) {
+kernel/mcsos_thread.c:135:mcsos_thread_t *mcsos_sched_pick_next(mcsos_scheduler_t *sched) {
+kernel/mcsos_thread.c:136:    if (sched == (mcsos_scheduler_t *)0 || sched->initialized == 0) {

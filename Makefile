@@ -171,3 +171,35 @@ m9-audit: m9-freestanding
 
 m9-all: m9-host-test m9-audit
 >@echo "[PASS] M9 all selesai"
+
+# ---- M10 ABI Syscall targets ----
+M10_BUILD_DIR := build/m10
+CFLAGS_M10_HOST := -std=c17 -Wall -Wextra -Werror -Iinclude
+CFLAGS_M10_KERNEL := -target x86_64-unknown-none-elf -std=c17 -ffreestanding -fno-stack-protector -fno-builtin -fno-pic -mno-red-zone -Wall -Wextra -Werror -O2 -Iinclude
+ASFLAGS_M10_KERNEL := -target x86_64-unknown-none-elf -ffreestanding -fno-stack-protector -fno-pic -mno-red-zone
+
+.PHONY: m10-all m10-host-test m10-freestanding m10-audit m10-clean
+
+m10-clean:
+>$(RM) -r $(M10_BUILD_DIR)
+
+$(M10_BUILD_DIR):
+>mkdir -p $(M10_BUILD_DIR)
+
+m10-host-test: | $(M10_BUILD_DIR)
+>$(CC) $(CFLAGS_M10_HOST) tests/test_syscall_host.c kernel/syscall/syscall.c -o $(M10_BUILD_DIR)/test_syscall_host
+>$(M10_BUILD_DIR)/test_syscall_host | tee $(M10_BUILD_DIR)/test_syscall_host.log
+
+m10-freestanding: | $(M10_BUILD_DIR)
+>$(CC) $(CFLAGS_M10_KERNEL) -c kernel/syscall/syscall.c -o $(M10_BUILD_DIR)/syscall.o
+>$(CC) $(ASFLAGS_M10_KERNEL) -c kernel/syscall/syscall_entry.S -o $(M10_BUILD_DIR)/syscall_entry.o
+>ld.lld -r $(M10_BUILD_DIR)/syscall.o $(M10_BUILD_DIR)/syscall_entry.o -o $(M10_BUILD_DIR)/m10_syscall_combined.o
+
+m10-audit: m10-freestanding
+>nm -u $(M10_BUILD_DIR)/m10_syscall_combined.o | tee $(M10_BUILD_DIR)/nm_undefined.txt
+>readelf -h $(M10_BUILD_DIR)/m10_syscall_combined.o | tee $(M10_BUILD_DIR)/readelf_header.txt
+>objdump -dr $(M10_BUILD_DIR)/m10_syscall_combined.o | tee $(M10_BUILD_DIR)/objdump.txt | grep -E 'x86_64_syscall_int80_stub|iretq|mcsos_syscall_dispatch'
+>sha256sum $(M10_BUILD_DIR)/test_syscall_host $(M10_BUILD_DIR)/m10_syscall_combined.o | tee $(M10_BUILD_DIR)/sha256.txt
+
+m10-all: m10-host-test m10-audit
+>@echo "[PASS] M10 all selesai"

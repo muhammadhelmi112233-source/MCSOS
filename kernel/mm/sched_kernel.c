@@ -17,6 +17,8 @@ static void demo_thread_a(void *arg) {
     log_writeln("[MCSOS:M9] thread A tick");
     mcsos_sched_yield(&g_sched);
     log_writeln("[MCSOS:M9] thread A tick 2");
+    /* last yield: return to boot/idle thread */
+    g_thread_a.state = MCSOS_THREAD_ZOMBIE;
     mcsos_sched_yield(&g_sched);
 }
 
@@ -25,6 +27,8 @@ static void demo_thread_b(void *arg) {
     log_writeln("[MCSOS:M9] thread B tick");
     mcsos_sched_yield(&g_sched);
     log_writeln("[MCSOS:M9] thread B tick 2");
+    /* last yield: return to boot/idle thread */
+    g_thread_b.state = MCSOS_THREAD_ZOMBIE;
     mcsos_sched_yield(&g_sched);
 }
 
@@ -63,9 +67,28 @@ void kernel_scheduler_init(void) {
     log_dec64(g_sched.runnable_count);
     log_writeln("");
 
+    /* yield 1: boot -> thread A */
     rc = mcsos_sched_yield(&g_sched);
     if (rc != MCSOS_SCHED_OK) {
         KERNEL_PANIC("M9 first yield failed", (uint64_t)(unsigned int)-rc);
+    }
+
+    /* yield 2: boot -> thread B (setelah A yield balik) */
+    rc = mcsos_sched_yield(&g_sched);
+    if (rc != MCSOS_SCHED_OK) {
+        KERNEL_PANIC("M9 second yield failed", (uint64_t)(unsigned int)-rc);
+    }
+
+    /* yield 3: boot -> thread A tick 2 */
+    rc = mcsos_sched_yield(&g_sched);
+    if (rc != MCSOS_SCHED_OK) {
+        KERNEL_PANIC("M9 third yield failed", (uint64_t)(unsigned int)-rc);
+    }
+
+    /* yield 4: boot -> thread B tick 2 */
+    rc = mcsos_sched_yield(&g_sched);
+    if (rc != MCSOS_SCHED_OK) {
+        KERNEL_PANIC("M9 fourth yield failed", (uint64_t)(unsigned int)-rc);
     }
 
     log_write("[MCSOS:M9] context_switches=");

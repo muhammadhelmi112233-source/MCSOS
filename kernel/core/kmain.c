@@ -15,6 +15,7 @@ extern void kernel_memory_init(void);
 extern void kernel_vmm_init(void);
 extern void kernel_heap_init(void);
 extern void kernel_scheduler_init(void);
+extern void kernel_syscall_init(void);
 
 static void m4_selftest(void) {
     KERNEL_ASSERT(__kernel_end > __kernel_start);
@@ -73,6 +74,10 @@ void kmain(void) {
     log_writeln("[MCSOS:M9] boot: kernel scheduler init start");
     kernel_scheduler_init();
     log_writeln("[MCSOS:M9] scheduler: ready");
+
+    log_writeln("[MCSOS:M10] boot: kernel syscall init start");
+    kernel_syscall_init();
+    log_writeln("[MCSOS:M10] syscall: ready");
 
     log_writeln("[MCSOS:M5] sti: enabling interrupts");
     cpu_sti();
