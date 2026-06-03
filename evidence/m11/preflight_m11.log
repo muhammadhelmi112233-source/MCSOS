@@ -1,0 +1,28 @@
+[M11] Preflight lingkungan dan artefak M0-M10
+[OK] git -> /usr/bin/git
+[OK] make -> /usr/bin/make
+[OK] clang -> /usr/bin/clang
+[OK] nm -> /usr/bin/nm
+[OK] readelf -> /usr/bin/readelf
+[OK] objdump -> /usr/bin/objdump
+[OK] sha256sum -> /usr/bin/sha256sum
+Ubuntu clang version 21.1.8 (6ubuntu1)
+Target: x86_64-pc-linux-gnu
+Thread model: posix
+GNU Make 4.4.1
+[OK] direktori kernel tersedia
+[OK] direktori arch tersedia
+[OK] direktori include tersedia
+[OK] direktori scripts tersedia
+[OK] direktori tests tersedia
+[OK] marker ditemukan: kernel_main\|kmain
+[OK] marker ditemukan: panic
+[OK] marker ditemukan: idt
+[OK] marker ditemukan: pmm
+[OK] marker ditemukan: vmm
+[OK] marker ditemukan: kmalloc\|kmem
+[OK] marker ditemukan: sched
+[OK] marker ditemukan: syscall
+[OK] commit: 5da5494
+?? evidence/m11/
+?? scripts/m11_preflight.sh

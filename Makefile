@@ -203,3 +203,33 @@ m10-audit: m10-freestanding
 
 m10-all: m10-host-test m10-audit
 >@echo "[PASS] M10 all selesai"
+
+# ---- M11 ELF64 User Loader targets ----
+M11_BUILD_DIR := build/m11
+CFLAGS_M11_HOST := -std=c17 -Wall -Wextra -Werror -O2 -Iinclude/mcsos/user
+CFLAGS_M11_KERNEL := --target=x86_64-unknown-none -std=c17 -Wall -Wextra -Werror -O2 -ffreestanding -fno-builtin -fno-stack-protector -fno-pic -mno-red-zone -Iinclude/mcsos/user
+
+.PHONY: m11-all m11-host-test m11-freestanding m11-audit m11-clean
+
+m11-clean:
+>$(RM) -r $(M11_BUILD_DIR)
+
+$(M11_BUILD_DIR):
+>mkdir -p $(M11_BUILD_DIR)
+
+m11-host-test: | $(M11_BUILD_DIR)
+>$(CC) $(CFLAGS_M11_HOST) tests/m11/m11_host_test.c kernel/user/m11_elf_loader.c -o $(M11_BUILD_DIR)/m11_host_test
+>$(M11_BUILD_DIR)/m11_host_test | tee $(M11_BUILD_DIR)/m11_host_test.log
+
+m11-freestanding: | $(M11_BUILD_DIR)
+>$(CC) $(CFLAGS_M11_KERNEL) -c kernel/user/m11_elf_loader.c -o $(M11_BUILD_DIR)/m11_elf_loader.o
+
+m11-audit: m11-freestanding
+>nm -u $(M11_BUILD_DIR)/m11_elf_loader.o | tee $(M11_BUILD_DIR)/m11_nm_undefined.txt
+>test ! -s $(M11_BUILD_DIR)/m11_nm_undefined.txt
+>readelf -h $(M11_BUILD_DIR)/m11_elf_loader.o | tee $(M11_BUILD_DIR)/m11_readelf_header.txt
+>objdump -dr $(M11_BUILD_DIR)/m11_elf_loader.o | tee $(M11_BUILD_DIR)/m11_objdump.txt | grep -E 'm11_elf64_plan_load|m11_validate_user_range|m11_error_name'
+>sha256sum $(M11_BUILD_DIR)/m11_elf_loader.o kernel/user/m11_elf_loader.c include/mcsos/user/m11_elf_loader.h tests/m11/m11_host_test.c | tee $(M11_BUILD_DIR)/m11_sha256.txt
+
+m11-all: m11-host-test m11-audit
+>@echo "[PASS] M11 all selesai"
