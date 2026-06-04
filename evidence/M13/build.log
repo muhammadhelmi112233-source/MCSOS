@@ -1,0 +1,47 @@
+./build/m13/m13_vfs_host_test
+=== M13 VFS Host Tests ===
+[PASS] ramfs_init: root node used
+[PASS] ramfs_init: root is dir
+[PASS] ramfs_init: node_count == 1
+[PASS] ramfs_init: data_used == 0
+[PASS] seed: rc == OK
+[PASS] lookup: rc == OK
+[PASS] lookup: node != NULL
+[PASS] lookup: size correct
+[PASS] lookup: type FILE
+[PASS] lookup missing: ENOENT
+[PASS] open rdonly: fd >= 0
+[PASS] read: n > 0
+[PASS] read: content match
+[PASS] read at EOF: n == 0
+[PASS] close: OK
+[PASS] open wronly creat: fd >= 0
+[PASS] write: n == 6
+[PASS] close wr: OK
+[PASS] open after write: fd >= 0
+[PASS] read back: n == 6
+[PASS] read back: content match
+[PASS] close rd: OK
+[PASS] lseek open: fd >= 0
+[PASS] lseek SET 7: pos == 7
+[PASS] read after seek: n == 5
+[PASS] read after seek: content match
+[PASS] close lseek: OK
+[PASS] dup open: fd >= 0
+[PASS] dup: fd2 >= 0
+[PASS] dup: fd2 != fd
+[PASS] read via dup: n == 5
+[PASS] read via dup: content match
+[PASS] close orig: OK
+[PASS] close dup:  OK
+[PASS] read bad fd: EBADF
+[PASS] write to rdonly: EACCES
+[PASS] open noexist no creat: ENOENT
+[PASS] close after close: EBADF
+[PASS] sys_open: fd >= 0
+[PASS] sys_read: n > 0
+[PASS] sys_read: content match
+[PASS] sys_lseek SET 0: OK
+[PASS] sys_close: OK
+
+Results: 43 passed, 0 failed

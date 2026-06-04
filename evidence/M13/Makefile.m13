@@ -1,0 +1,28 @@
+CC      := cc
+CFLAGS  := -std=c11 -Wall -Wextra -Wpedantic -Werror \
+           -Wno-unused-parameter \
+           -I./include
+
+SRCS_VFS := kernel/vfs/ramfs.c \
+            kernel/vfs/fd.c \
+            kernel/vfs/sys_vfs.c
+
+TEST_SRC := tests/m13_vfs_host_test.c
+
+TEST_BIN := build/m13/m13_vfs_host_test
+
+.PHONY: m13-all m13-test clean
+
+m13-all: $(TEST_BIN)
+
+$(TEST_BIN): $(SRCS_VFS) $(TEST_SRC) | build/m13
+	$(CC) $(CFLAGS) $(SRCS_VFS) $(TEST_SRC) -o $@
+
+build/m13:
+	mkdir -p build/m13
+
+m13-test: $(TEST_BIN)
+	./$(TEST_BIN)
+
+clean:
+	rm -f $(TEST_BIN)
