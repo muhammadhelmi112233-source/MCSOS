@@ -1,0 +1,19 @@
+QEMU smoke test M15 — catatan keterbatasan environment
+
+Tanggal: $(date)
+QEMU versi: QEMU emulator version 10.2.1
+kernel.elf: build/kernel.elf (berhasil di-build, ELF64 x86-64)
+
+Hasil: QEMU tidak dapat menjalankan kernel.elf secara langsung karena
+kernel MCSOS menggunakan Limine bootloader dan membutuhkan ISO image.
+Target pembuatan ISO tidak tersedia di Makefile saat ini.
+
+Keterbatasan ini dicatat sesuai panduan M15 bagian Readiness Review:
+"Runtime: QEMU smoke log — Harus diuji ulang di WSL 2 mahasiswa"
+
+Evidence M15 yang tersedia:
+- host_test.txt      : M15 host test passed, flush_count=5
+- nm_undefined.txt   : kosong (tidak ada undefined symbol)
+- readelf_header.txt : ELF64 Relocatable, Machine X86-64 OK
+- objdump.txt        : disassembly tersimpan
+- SHA256SUMS.txt     : checksum semua artifact tersimpan
