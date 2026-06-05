@@ -233,3 +233,32 @@ m11-audit: m11-freestanding
 
 m11-all: m11-host-test m11-audit
 >@echo "[PASS] M11 all selesai"
+
+
+
+# ---- M15: MCSFS1 minimal persistent filesystem ----
+HOST_CFLAGS_M15 := -std=c17 -Wall -Wextra -Werror -O2 -g
+FREESTANDING_CFLAGS_M15 := -target x86_64-elf -std=c17 -ffreestanding -fno-builtin -fno-stack-protector -fno-pic -mno-red-zone -Wall -Wextra -Werror -O2 -g
+
+.PHONY: m15-all m15-clean
+m15-all: artifacts/m15/test_mcsfs1 artifacts/m15/mcsfs1.o artifacts/m15/mcsfs1.rel.o
+> ./artifacts/m15/test_mcsfs1 | tee artifacts/m15/host_test.txt
+> nm -u artifacts/m15/mcsfs1.rel.o | tee artifacts/m15/nm_undefined.txt
+> test ! -s artifacts/m15/nm_undefined.txt
+> readelf -h artifacts/m15/mcsfs1.rel.o | tee artifacts/m15/readelf_header.txt
+> objdump -dr artifacts/m15/mcsfs1.rel.o | tee artifacts/m15/objdump.txt >/dev/null
+> sha256sum artifacts/m15/* | tee artifacts/m15/SHA256SUMS.txt
+
+artifacts/m15/test_mcsfs1: tests/m15/test_mcsfs1.c fs/mcsfs1/mcsfs1.c fs/mcsfs1/mcsfs1.h
+> mkdir -p artifacts/m15
+> $(CC) $(HOST_CFLAGS_M15) -I. tests/m15/test_mcsfs1.c fs/mcsfs1/mcsfs1.c -o $@
+
+artifacts/m15/mcsfs1.o: fs/mcsfs1/mcsfs1.c fs/mcsfs1/mcsfs1.h
+> mkdir -p artifacts/m15
+> $(CC) $(FREESTANDING_CFLAGS_M15) -I. -c fs/mcsfs1/mcsfs1.c -o $@
+
+artifacts/m15/mcsfs1.rel.o: artifacts/m15/mcsfs1.o
+> ld -r $< -o $@
+
+m15-clean:
+> rm -rf artifacts/m15

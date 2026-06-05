@@ -1,0 +1,44 @@
+mkdir -p artifacts/m15
+clang -std=c17 -Wall -Wextra -Werror -O2 -g -I. tests/m15/test_mcsfs1.c fs/mcsfs1/mcsfs1.c -o artifacts/m15/test_mcsfs1
+mkdir -p artifacts/m15
+clang -target x86_64-elf -std=c17 -ffreestanding -fno-builtin -fno-stack-protector -fno-pic -mno-red-zone -Wall -Wextra -Werror -O2 -g -I. -c fs/mcsfs1/mcsfs1.c -o artifacts/m15/mcsfs1.o
+ld -r artifacts/m15/mcsfs1.o -o artifacts/m15/mcsfs1.rel.o
+./artifacts/m15/test_mcsfs1 | tee artifacts/m15/host_test.txt
+M15 host test passed: flush_count=5
+nm -u artifacts/m15/mcsfs1.rel.o | tee artifacts/m15/nm_undefined.txt
+test ! -s artifacts/m15/nm_undefined.txt
+readelf -h artifacts/m15/mcsfs1.rel.o | tee artifacts/m15/readelf_header.txt
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              REL (Relocatable file)
+  Machine:                           Advanced Micro Devices X86-64
+  Version:                           0x1
+  Entry point address:               0x0
+  Start of program headers:          0 (bytes into file)
+  Start of section headers:          40712 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           0 (bytes)
+  Number of program headers:         0
+  Size of section headers:           64 (bytes)
+  Number of section headers:         25
+  Section header string table index: 24
+objdump -dr artifacts/m15/mcsfs1.rel.o | tee artifacts/m15/objdump.txt >/dev/null
+sha256sum artifacts/m15/* | tee artifacts/m15/SHA256SUMS.txt
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  artifacts/m15/SHA256SUMS.txt
+0d2b61fce4a32636d7ab4b95624e717ca47b201fb1a15fedd0baf30ff0797347  artifacts/m15/build_log.txt
+cc113c9033ff48b41cdb48ea45a0e6689f50581b9b663bbd0ce360d79b8699cd  artifacts/m15/host_info.txt
+51398b24103c7f24b278a4e19012702cd40ff7a1bba5227b1bce55e48cd96017  artifacts/m15/host_test.txt
+ba759cb953667c31812fbd27d3ab5c8f263c7509cce407b738d100282a62d987  artifacts/m15/mcsfs1.o
+3b7ab38d73760408866ded41d1e0ba81791b3dd173976053df6ab9e8e1e47c40  artifacts/m15/mcsfs1.rel.o
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  artifacts/m15/nm_undefined.txt
+8644fbd1c9bb895efe1c9da449e619a4287b0bfd4fb03746885ca93fc66a19eb  artifacts/m15/objdump.txt
+3fcdb22557e74e0bede0ea305a42f1596d3f16b96a0ac8cb4bf7a2513796c25f  artifacts/m15/preflight.txt
+da5e673db98a2c1b91c5a944f7ec09339597f02ca0c498cdf243c060e6dcea2b  artifacts/m15/readelf_header.txt
+2a7b2c002f19aceb8c227d01f05dfe7c0a79508dd71ebad37850cccd90586f00  artifacts/m15/test_mcsfs1
+356be9ab079870b2ca5386b6c518b17fbfa8fdf7c6faf8cf651233e4e5b16773  artifacts/m15/tool_versions.txt
