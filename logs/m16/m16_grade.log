@@ -1,0 +1,23 @@
+== M16 grade ==
+2026-06-06T08:35:42+07:00
+== C2 host test ==
+make: Entering directory '/home/sihab/src/mcsos/tests/m16'
+rm -f m16_host_test m16_mcsfs_journal.o nm_undefined.txt readelf_header.txt objdump_disasm.txt sha256sum.txt
+clang -std=c17 -Wall -Wextra -Werror -O2 -DMCSOS_M16_HOST_TEST m16_mcsfs_journal.c -o m16_host_test
+./m16_host_test
+M16 host tests PASS
+make: Leaving directory '/home/sihab/src/mcsos/tests/m16'
+== C4 nm undefined ==
+(kosong - OK)
+== C5 readelf ==
+  Class:                             ELF64
+  Type:                              REL (Relocatable file)
+  Machine:                           Advanced Micro Devices X86-64
+== C7 sha256sum ==
+92158bc74bdf23c0a693dd3d7d11dd89926b83ef11f6975c09cea6def374fd6b  m16_mcsfs_journal.o
+== git log ==
+a96ca88 M15: catat keterbatasan QEMU smoke test, update SHA256SUMS
+7284b14 M15: MCSFS1 persistent filesystem minimal - host test passed, ELF64 freestanding audit OK
+78596ef m14: block device layer, RAM block driver, buffer cache minimal
+55569e2 m13: VFS/RAMFS layer (ramfs, fd-table, sys wrappers, 43 host tests passing)
+02b35d3 m12: kernel synchronization primitives (spinlock, mutex, lockdep)

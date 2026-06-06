@@ -1,0 +1,65 @@
+== M16 preflight ==
+2026-06-06T08:22:53+07:00
+== host ==
+Linux DESKTOP-DIRC349 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:30:46 UTC 2025 x86_64 GNU/Linux
+Distributor ID:	Ubuntu
+Description:	Ubuntu 26.04 LTS
+Release:	26.04
+Codename:	resolute
+== tools ==
+Ubuntu clang version 21.1.8 (6ubuntu1)
+GNU Make 4.4.1
+GNU nm (GNU Binutils for Ubuntu) 2.46
+GNU readelf (GNU Binutils for Ubuntu) 2.46
+GNU objdump (GNU Binutils for Ubuntu) 2.46
+sha256sum (uutils coreutils) 0.8.0
+QEMU emulator version 10.2.1 (Debian 1:10.2.1+ds-1ubuntu3)
+== git ==
+?? artifacts/m14_nm_undefined.txt
+?? artifacts/m14_objdump_block.txt
+?? artifacts/m14_readelf_block.txt
+?? artifacts/m14_sha256.txt
+?? logs/m16/
+?? scripts/m15_preflight.sh
+?? scripts/m16_preflight.sh
+a96ca88
+== subsystem probes ==
+kernel/arch/x86_64/context_switch.S
+kernel/arch/x86_64/idt.c
+kernel/arch/x86_64/isr.S
+kernel/arch/x86_64/pic.c
+kernel/arch/x86_64/pit.c
+kernel/block/bcache.c
+kernel/block/block.c
+kernel/block/block_demo.c
+kernel/block/ramblk.c
+kernel/core/kmain.c
+kernel/core/log.c
+kernel/core/panic.c
+kernel/core/serial.c
+kernel/core/trap.c
+kernel/include/mcsos/kernel/log.h
+kernel/include/mcsos/kernel/panic.h
+kernel/include/mcsos/kernel/pmm.h
+kernel/include/mcsos/kernel/types.h
+kernel/include/mcsos/kernel/version.h
+kernel/include/mcsos/kernel/vmm.h
+kernel/lib/memory.c
+kernel/mcsos_thread.c
+kernel/mm/kmem.c
+kernel/mm/kmem_kernel.c
+kernel/mm/limine_memmap.c
+kernel/mm/pmm.c
+kernel/mm/sched_kernel.c
+kernel/mm/vmm.c
+kernel/mm/vmm_kernel.c
+kernel/sync/lockdep.c
+kernel/sync/mutex.c
+kernel/sync/spinlock.c
+kernel/syscall/syscall.c
+kernel/syscall/syscall_entry.S
+kernel/syscall/syscall_kernel.c
+kernel/user/m11_elf_loader.c
+kernel/vfs/fd.c
+kernel/vfs/ramfs.c
+kernel/vfs/sys_vfs.c
