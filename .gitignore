@@ -7,3 +7,4 @@ iso_root/
 *.o
 *.d
 third_party/limine/
+tests/m16/m16_host_test
