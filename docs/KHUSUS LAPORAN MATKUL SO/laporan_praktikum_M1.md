@@ -269,7 +269,7 @@ Output:
 | Apakah berada di filesystem Linux WSL, bukan `/mnt/c` | `Ya`                         |
 | Remote repository                                     | `[URL repo privat jika ada]` |
 | Branch                                                | `main`                       |
-| Commit hash awal                                      | `[hash commit awal]`         |
+| Commit hash awal                                      | `[1a45d15]`         |
 | Commit hash akhir                                     | `[isi dengan hash dari git rev-parse HEAD setelah commit kedua]` |
 
 ---
