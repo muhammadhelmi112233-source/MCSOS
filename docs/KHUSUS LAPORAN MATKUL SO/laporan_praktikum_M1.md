@@ -27,7 +27,7 @@
 | Tanggal pengumpulan           | `2026-05-20`                                                                                   |
 | Repository                    | `~/src/mcsos`                                                                                  |
 | Branch                        | `main`                                                                                         |
-| Commit awal                   | `[hash commit awal]`                                                                           |
+| Commit awal                   | `[1a45d15]`                                                                           |
 | Commit akhir                  | `[isi dengan hash dari git rev-parse HEAD setelah commit kedua]`                               |
 | Status readiness yang diklaim | `siap demonstrasi praktikum`                                                                   |
 
