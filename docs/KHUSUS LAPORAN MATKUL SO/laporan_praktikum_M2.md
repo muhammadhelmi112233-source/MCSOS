@@ -24,7 +24,7 @@
 | Nama kelompok                 | `-`                                                                                            |
 | Anggota kelompok              | `-`                                                                                            |
 | Tanggal praktikum             | `2026-05-21`                                                                                   |
-| Tanggal pengumpulan           | `[YYYY-MM-DD]`                                                                                 |
+| Tanggal pengumpulan           | `[2026-07-17]`                                                                                 |
 | Repository                    | `~/src/mcsos`                                                                                  |
 | Branch                        | `main`                                                                                         |
 | Commit awal                   | `` `[hash commit awal dari M1]` ``                                                             |
