@@ -24,7 +24,7 @@
 | Nama kelompok                 | `-`                                                                                            |
 | Anggota kelompok              | `-`                                                                                            |
 | Tanggal praktikum             | `2026-05-28`                                                                                   |
-| Tanggal pengumpulan           | `2026-05-28`                                                                                   |
+| Tanggal pengumpulan           | `2026-07-17`                                                                                   |
 | Repository                    | `/home/sihab/src/mcsos`                                                                        |
 | Branch                        | `praktikum/m3-panic-debug-audit`                                                               |
 | Commit awal                   | `7d30a1a`                                                                                      |
